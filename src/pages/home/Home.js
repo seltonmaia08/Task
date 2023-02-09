@@ -5,42 +5,71 @@ import {
     TouchableOpacity,
     View,
     SafeAreaView,
-    FlatList
+    FlatList,
+    TextInput,
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 import style from "./style";
 import DB from '../../services/fireConfig'
-import { query, onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, deleteDoc, doc } from "firebase/firestore";
+import { Ionicons } from "@expo/vector-icons";
 const Home = ({ navigation, route }) => {
 
-    const [task, setTask] = useState([])
+    const [task, setTask] = useState([''])
     const idUser = route.params.id
     console.log("USER ID: " + idUser)
 
     const db = DB.store
 
+    //reading database
     useEffect(() => {
-        const q = query(collection(db, 'task'))
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const d = onSnapshot(collection(db, idUser), (query) => {
             const list = []
-            snapshot.docChanges().forEach((change) => {
-                list.push({ ...change.doc.data(), id: change.doc.id })
+            query.forEach((doc) => {
+                list.push({ ...doc.data(), id: doc.id })
             })
             setTask(list)
             console.log(list)
         })
     }, [])
 
-    const Item = ({ title }) => (
-        <View style={style.item}>
-            <Text style={style.title}>{title}</Text>
-        </View>
-    );
+    const deleteDB = (id) => {
+        deleteDoc(doc(db, idUser, id))
+        console.log(id)
+    }
+
+    const Item = ({ title }) => {
+        return (
+            <View style={style.item}>
+                <Text style={style.title}>{title}</Text>
+            </View >
+        )
+    };
+
+    const renderItem = ({ item }) => {
+        return (
+            <View style={style.card_item}>
+                <TouchableOpacity style={style.btn_iconCheck}>
+                    <Ionicons style={style.iconCheckmark} name="checkmark" size={30} color="black" />
+                </TouchableOpacity>
+                <Item title={item.title} />
+                <TouchableOpacity
+                    style={style.btn_iconTrash}
+                    onPress={() => deleteDB(item.id)}>
+                    <Ionicons style={style.iconTrash} name="trash" size={30} color="black" />
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+        <SafeAreaView style={style.contain}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={style.contain}>
                 {
-                    task === []
+                    task.length == 0
                         ?
                         <View style={style.card_message}>
                             <ImageBackground
@@ -51,16 +80,19 @@ const Home = ({ navigation, route }) => {
                         </View>
                         :
                         <FlatList
-                            showsVerticalScrollIndicator={false}
                             data={task}
-                            renderItem={({ item }) => <Item title={item.title} />}
+                            renderItem={renderItem}
                             keyExtractor={item => item.id}
                         />
+
                 }
-                <TouchableOpacity style={style.btn_add}>
+
+                <TouchableOpacity
+                    style={style.btn_add}
+                    onPress={() => navigation.navigate('Add', { id: idUser })}>
                     <Text style={style.btn_text}>+</Text>
                 </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }

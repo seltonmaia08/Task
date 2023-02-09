@@ -14,22 +14,23 @@ import {
     signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import Style from './Styles'
+import style from './styles'
+import { Ionicons } from "@expo/vector-icons";
 
 const Login = ({ navigation }) => {
 
     const logo = require('../../../assets/img/logo.png')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [viewPass, setViewPass] = useState(true)
 
     const login = () => {
-        console.log(email, password)
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user.uid;
-                navigation.navigate('Home', {id: user})
+                navigation.navigate('Home', { id: user })
                 // ...
             })
             .catch((error) => {
@@ -38,52 +39,66 @@ const Login = ({ navigation }) => {
             });
     }
 
+    const view_pass = (p) => {
+        setViewPass(p)
+    }
 
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={Style.contain}>
-            <ImageBackground style={Style.logo} source={logo} resizeMode={'cover'}></ImageBackground>
-            <Text style={Style.title}>LOGIN</Text>
-            <View style={Style.card}>
-                <Text style={Style.text}>
-                    E-mail
+            style={style.contain}>
+            <ImageBackground style={style.logo} source={logo} resizeMode={'cover'}></ImageBackground>
+            <Text style={style.title}>LOGIN</Text>
+            <View style={style.card}>
+                <Text style={style.text}>
+                    <Ionicons name="mail" size={20} color="#a02b2b"/>
+                    E-mail  
                 </Text>
                 <TextInput
-                    style={Style.input}
-                    keyboardAppearance="email"
+                    style={style.input}
+                    keyboardType="email"
                     onChangeText={t => setEmail(t)}
                     value={email} />
-                <Text style={Style.text}>Password</Text>
-                <TextInput
-                    style={Style.input}
-                    keyboardAppearance="default"
-                    secureTextEntry={true}
-                    onChangeText={t => setPassword(t)}
-                    value={password} />
+                <Text style={style.text}>   
+                    <Ionicons name="key" size={20} color="#a02b2b"/>
+                    Password
+                    </Text>
+                <View>
+                    <TextInput
+                        style={style.input}
+                        keyboardType="default"
+                        secureTextEntry={viewPass}
+                        onChangeText={t => setPassword(t)}
+                        value={password} />
+                    <TouchableOpacity
+                        style={style.btn_eye}
+                        onPress={() => view_pass(!viewPass)}>
+                        <Ionicons name={viewPass === true ? "eye-off" : "eye"} size={20} color="#fff" />
+                    </TouchableOpacity>
+                </View>
                 {
                     email === '' || password === ''
                         ?
                         <TouchableOpacity
-                            style={Style.btn_login_disabled}
+                            style={style.btn_login_disabled}
                             disabled={false}>
-                            <Text style={Style.btn_text}>Login</Text>
+                            <Text style={style.btn_text}>Login</Text>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity
-                            style={Style.btn_login}
+                            style={style.btn_login}
                             onPress={() => login()}>
-                            <Text style={Style.btn_text}>Login</Text>
+                            <Text style={style.btn_text}>Login</Text>
                         </TouchableOpacity>
                 }
-                <View style={Style.card_regsiter}>
-                    <Text style={Style.text}>
+                <View style={style.card_regsiter}>
+                    <Text style={style.text}>
                         Don't have an account yet?
                     </Text>
                     <TouchableOpacity
-                        style={Style.btn_register}
-                    onPress={() => navigation.navigate('Register') }>
-                        <Text style={Style.btn_text}>Register now</Text>
+                        style={style.btn_register}
+                        onPress={() => navigation.navigate('Register')}>
+                        <Text style={style.btn_text}>Register now</Text>
                     </TouchableOpacity>
                 </View>
             </View>

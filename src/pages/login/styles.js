@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderBottomColor: "#A02B2B",
         borderBottomWidth: 2,
+        backgroundColor: '#313131'
     },
     btn_text: {
         color: "#fff",
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
         color: '#fff' 
     },
 
-    //Styles for the login screen
     card_regsiter: {
         width: "100%",
         alignItems: "center",
@@ -89,8 +89,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-
-    //Styles for the register screen
+    btn_eye: {
+        position: 'absolute',
+        right: 15,
+        top: 7
+    }
 
 
 })
