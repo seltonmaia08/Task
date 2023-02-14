@@ -15,7 +15,7 @@ import DB from '../../services/fireConfig'
 import { onSnapshot, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 
-const Home = ({ navigation, route, props }) => {
+const Home = ({ navigation, route }) => {
 
     const [task, setTask] = useState([''])
     const idUser = route.params.id
