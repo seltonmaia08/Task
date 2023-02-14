@@ -10,7 +10,7 @@ const style = StyleSheet.create({
     card_add: {
         flex: 1,
         alignItems: 'center',
-        top: 100
+        top: 100,
 
     },
     text_add: {
@@ -22,10 +22,18 @@ const style = StyleSheet.create({
     input_add: {
         borderBottomWidth: 2,
         borderBottomColor: "#A02B2B",
-        width: "90%",
+        width: "80%",
         marginBottom: 50,
         color: "#000",
         fontSize: 20
+    },
+    input_date: {
+        borderBottomWidth: 2,
+        borderBottomColor: "#A02B2B",
+        width: "90%",
+        paddingBottom: 10,
+        color: "#000",
+        fontSize: 20,
     },
     btn_add_task: {
         width: 100,
@@ -36,7 +44,32 @@ const style = StyleSheet.create({
         borderRadius: 50,
         position: 'absolute',
         bottom: 200,
-        right: 40
+        right: 40,
+    },
+    data_task: {
+        width: "100%",
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btn_data: {
+        position: 'absolute',
+        right: 0
+    },
+    btn_time: {
+        position: 'absolute',
+        right: 0
+    },
+    card_datas: {
+        width: "80%",
+        flexDirection: 'row',
+    },
+    date: {
+        width: "50%",
+    },
+    time: {
+        width: "50%",
+        paddingLeft: 10
     }
 })
 

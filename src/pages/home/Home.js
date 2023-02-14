@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import react, { Component, useEffect, useState } from "react";
 import {
     ImageBackground,
     Text,
@@ -12,9 +12,10 @@ import {
 } from "react-native";
 import style from "./style";
 import DB from '../../services/fireConfig'
-import { onSnapshot, collection, deleteDoc, doc } from "firebase/firestore";
+import { onSnapshot, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
-const Home = ({ navigation, route }) => {
+
+const Home = ({ navigation, route, props }) => {
 
     const [task, setTask] = useState([''])
     const idUser = route.params.id
@@ -24,7 +25,7 @@ const Home = ({ navigation, route }) => {
 
     //reading database
     useEffect(() => {
-        const d = onSnapshot(collection(db, idUser), (query) => {
+        const d = onSnapshot(collection(db, 'Task_' + idUser), (query) => {
             const list = []
             query.forEach((doc) => {
                 list.push({ ...doc.data(), id: doc.id })
@@ -34,15 +35,16 @@ const Home = ({ navigation, route }) => {
         })
     }, [])
 
-    const deleteDB = (id) => {
-        deleteDoc(doc(db, idUser, id))
-        console.log(id)
+    const taskDone = (id) => {
+        deleteDoc(doc(db, 'Task_' + idUser, id))
     }
 
-    const Item = ({ title }) => {
+    const Item = ({ title, date, time }) => {
         return (
             <View style={style.item}>
                 <Text style={style.title}>{title}</Text>
+                <Text style={style.title}>{"Day: " + date + '  ' + "Time: " + time}</Text>
+
             </View >
         )
     };
@@ -50,15 +52,12 @@ const Home = ({ navigation, route }) => {
     const renderItem = ({ item }) => {
         return (
             <View style={style.card_item}>
-                <TouchableOpacity style={style.btn_iconCheck}>
-                    <Ionicons style={style.iconCheckmark} name="checkmark" size={30} color="black" />
-                </TouchableOpacity>
-                <Item title={item.title} />
                 <TouchableOpacity
-                    style={style.btn_iconTrash}
-                    onPress={() => deleteDB(item.id)}>
-                    <Ionicons style={style.iconTrash} name="trash" size={30} color="black" />
+                    onPress={() => taskDone(item.id)}
+                    style={style.btn_iconCheck}>
+                    <Ionicons style={style.iconCheckmark} name="checkmark" size={30} color="#2a9e30" />
                 </TouchableOpacity>
+                <Item title={item.title} date={item.date} time={item.time}/>
             </View>
         )
     }

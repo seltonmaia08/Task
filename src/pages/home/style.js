@@ -21,8 +21,8 @@ const style = StyleSheet.create({
         backgroundColor: '#A02B2B',
         borderRadius: 50,
         position: 'absolute',
-        bottom: 110,
-        right: 40
+        bottom: 20,
+        right: 20
     },
     btn_text: {
         color: '#fff',
@@ -30,18 +30,20 @@ const style = StyleSheet.create({
     },
 
     item: {
-        width: "80%",
-        height: 50,
+        width: "85%",
+        height: 60,
         alignItems: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         backgroundColor: "#A02B2B50",
         borderRadius: 50,
-        marginBottom: 10
+        marginBottom: 10,
+        left: 20,
+        justifyContent: 'space-between',
+        padding: 5
     },
     title: {
         fontSize: 18,
         color: "#000",
-        paddingLeft: 10
     },
     btn_iconCheck: {
         width: 50,
@@ -52,21 +54,6 @@ const style = StyleSheet.create({
         position: 'absolute',
         left: 0
     },
-    btn_iconTrash: {
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        right: 0
-    },
-    iconCheckmark: {
-        color: "#2a9e30",
-    },
-    iconTrash: {
-        color: "#A02B2B",
-    },
     card_item: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -75,5 +62,6 @@ const style = StyleSheet.create({
 
     }
 })
+
 
 export default style
