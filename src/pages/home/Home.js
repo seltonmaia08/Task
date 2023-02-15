@@ -33,6 +33,9 @@ const Home = ({ navigation, route }) => {
             setTask(list)
             console.log(list)
         })
+
+
+
     }, [])
 
     const taskDone = (id) => {
@@ -51,13 +54,22 @@ const Home = ({ navigation, route }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={style.card_item}>
+            <View
+                style={style.card_item}>
                 <TouchableOpacity
                     onPress={() => taskDone(item.id)}
                     style={style.btn_iconCheck}>
                     <Ionicons style={style.iconCheckmark} name="checkmark" size={30} color="#2a9e30" />
                 </TouchableOpacity>
-                <Item title={item.title} date={item.date} time={item.time}/>
+                <TouchableOpacity style={{width: '100%', marginLeft: 50}}
+                    onPress={() => navigation.navigate('Edit', {
+                        id_t: item.id,
+                        title: item.title,
+                        date: item.date,
+                        time: item.time,
+                        id: idUser })}>
+                    <Item title={item.title} date={item.date} time={item.time} />
+                </TouchableOpacity>
             </View>
         )
     }

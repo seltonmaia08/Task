@@ -23,6 +23,8 @@ const Login = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [viewPass, setViewPass] = useState(true)
+    const [error, setError] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     const login = () => {
         const auth = getAuth();
@@ -36,6 +38,7 @@ const Login = ({ navigation }) => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setError(errorCode)
             });
     }
 
@@ -47,22 +50,31 @@ const Login = ({ navigation }) => {
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={style.contain}>
+            {
+                error != ''
+                ?
+                <View style={style.card_error}>
+                    <Ionicons name="alert-circle" size={40} color="#fff" />
+                    <Text style={style.text_error}>Invalid email or passwor, Try again...</Text>
+                </View>
+                : null
+            }
             <ImageBackground style={style.logo} source={logo} resizeMode={'cover'}></ImageBackground>
             <Text style={style.title}>LOGIN</Text>
             <View style={style.card}>
                 <Text style={style.text}>
-                    <Ionicons name="mail" size={20} color="#a02b2b"/>
-                    E-mail  
+                    <Ionicons name="mail" size={20} color="#a02b2b" />
+                    E-mail
                 </Text>
                 <TextInput
                     style={style.input}
                     keyboardType="email"
                     onChangeText={t => setEmail(t)}
                     value={email} />
-                <Text style={style.text}>   
-                    <Ionicons name="key" size={20} color="#a02b2b"/>
+                <Text style={style.text}>
+                    <Ionicons name="key" size={20} color="#a02b2b" />
                     Password
-                    </Text>
+                </Text>
                 <View>
                     <TextInput
                         style={style.input}

@@ -7,19 +7,19 @@ const style = StyleSheet.create({
         backgroundColor: "#fff",
         padding: 10,
     },
-    card_add: {
+    card_edit: {
         flex: 1,
         alignItems: 'center',
         top: 100,
 
     },
-    text_add: {
+    text_edit: {
         color: "#000",
         fontSize: 20,
         paddingTop: 20,
         paddingBottom: 20,
     },
-    input_add: {
+    input_edit: {
         borderBottomWidth: 2,
         borderBottomColor: "#A02B2B",
         width: "80%",
@@ -35,7 +35,7 @@ const style = StyleSheet.create({
         color: "#000",
         fontSize: 20,
     },
-    btn_add_task: {
+    btn_edit_task: {
         width: '90%',
         height: 60,
         justifyContent: "center",

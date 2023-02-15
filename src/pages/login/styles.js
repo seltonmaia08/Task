@@ -93,6 +93,23 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 15,
         top: 7
+    },
+    card_error: {
+        width: "80%",
+        height: 50,
+        backgroundColor: '#a02b2b',
+        position: 'absolute',
+        top: 80,
+        zIndex: 1,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    },
+    text_error: {
+        color: "#fff",
+        fontSize: 20,
+        paddingLeft: 10
     }
 
 
