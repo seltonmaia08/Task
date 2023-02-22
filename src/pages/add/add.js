@@ -30,7 +30,7 @@ const Add = ({ navigation, route, }) => {
             title: add_task,
             status_task: false,
             date: textDate,
-            time: textTime
+            time: textTime,
         })
         navigation.navigate('Home', { id: idUser })
     }

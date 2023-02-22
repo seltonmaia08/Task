@@ -1,4 +1,4 @@
-import react, { Component, useEffect, useState } from "react";
+import react, { useEffect, useState } from "react";
 import {
     ImageBackground,
     Text,
@@ -6,23 +6,20 @@ import {
     View,
     SafeAreaView,
     FlatList,
-    TextInput,
     KeyboardAvoidingView,
-    Platform
+    Platform,
 } from "react-native";
 import style from "./style";
 import DB from '../../services/fireConfig'
-import { onSnapshot, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { onSnapshot, collection, deleteDoc, doc, } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 
 const Home = ({ navigation, route }) => {
 
     const [task, setTask] = useState([''])
     const idUser = route.params.id
-    console.log("USER ID: " + idUser)
-
     const db = DB.store
-
+  
     //reading database
     useEffect(() => {
         const d = onSnapshot(collection(db, 'Task_' + idUser), (query) => {
@@ -31,27 +28,19 @@ const Home = ({ navigation, route }) => {
                 list.push({ ...doc.data(), id: doc.id })
             })
             setTask(list)
-            console.log(list)
         })
-
-
-
     }, [])
-
     const taskDone = (id) => {
         deleteDoc(doc(db, 'Task_' + idUser, id))
     }
-
     const Item = ({ title, date, time }) => {
         return (
             <View style={style.item}>
                 <Text style={style.title}>{title}</Text>
                 <Text style={style.title}>{"Day: " + date + '  ' + "Time: " + time}</Text>
-
             </View >
         )
     };
-
     const renderItem = ({ item }) => {
         return (
             <View
@@ -61,19 +50,20 @@ const Home = ({ navigation, route }) => {
                     style={style.btn_iconCheck}>
                     <Ionicons style={style.iconCheckmark} name="checkmark" size={30} color="#2a9e30" />
                 </TouchableOpacity>
-                <TouchableOpacity style={{width: '100%', marginLeft: 50}}
+                <TouchableOpacity style={{ width: '100%', marginLeft: 50 }}
                     onPress={() => navigation.navigate('Edit', {
                         id_t: item.id,
                         title: item.title,
                         date: item.date,
                         time: item.time,
-                        id: idUser })}>
+                        state: item.state,
+                        id: idUser
+                    })}>
                     <Item title={item.title} date={item.date} time={item.time} />
                 </TouchableOpacity>
             </View>
         )
     }
-
     return (
         <SafeAreaView style={style.contain}>
             <KeyboardAvoidingView
@@ -90,22 +80,19 @@ const Home = ({ navigation, route }) => {
                             </ImageBackground>
                         </View>
                         :
-                        <FlatList
+                        <FlatList style={{top: 20}}
                             data={task}
                             renderItem={renderItem}
                             keyExtractor={item => item.id}
                         />
-
                 }
-
                 <TouchableOpacity
                     style={style.btn_add}
                     onPress={() => navigation.navigate('Add', { id: idUser })}>
                     <Text style={style.btn_text}>+</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
-
 export default Home

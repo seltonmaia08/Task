@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import {
     Text,
     TextInput,
@@ -11,6 +11,7 @@ import {
 import { initializeApp } from "../../services/fireConfig";
 import {
     getAuth,
+    onAuthStateChanged,
     signInWithEmailAndPassword,
 } from "firebase/auth";
 
@@ -25,6 +26,14 @@ const Login = ({ navigation }) => {
     const [viewPass, setViewPass] = useState(true)
     const [error, setError] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+
+    useEffect(() => {
+       const auth = getAuth()
+       const user = auth.currentUser
+       if(user){
+        navigation.navigate("Home", {idUser: user.uid})
+       }
+    }, [])
 
     const login = () => {
         const auth = getAuth();

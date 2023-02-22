@@ -29,7 +29,6 @@ const Edit = ({ navigation, route, }) => {
     const edit = () => {
         setDoc(doc(db, 'Task_' + idUser, id_t), {
             title: title,
-            status_task: false,
             date: date_t,
             time: time
         })

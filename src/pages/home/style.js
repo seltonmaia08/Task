@@ -5,13 +5,13 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: "#fff",
-        padding: 10,
+        padding: 0,
     },
     card_message: {
         width: '100%',
         height: 500,
         position: 'absolute',
-        bottom: -55,
+        bottom: -10,
     },
     btn_add: {
         width: 100,
@@ -21,8 +21,8 @@ const style = StyleSheet.create({
         backgroundColor: '#A02B2B',
         borderRadius: 50,
         position: 'absolute',
-        bottom: 50,
-        right: 30
+        bottom: 80,
+        right: 30,
     },
     btn_text: {
         color: '#fff',
@@ -58,9 +58,22 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        width: "100%"
-
-    }
+        width: "100%",
+    },
+      menu: {
+        width: "100%",
+        padding: 15,
+        textAlign: 'center',
+        backgroundColor: "#31313150",
+        position: 'absolute',
+        bottom: 0,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        zIndex: 1
+      },
+      btn: {
+        width: "10%",
+      },
 })
 
 
